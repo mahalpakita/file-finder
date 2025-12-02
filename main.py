@@ -18,6 +18,20 @@ from PySide6.QtGui import QFont, QColor, QPainter, QIcon
 from PySide6.QtCore import QTimer, QRect
 from design import generate_stylesheet
 
+
+def resource_path(relative_path: str) -> str:
+    """Get absolute path to resource, works for dev and for PyInstaller EXE."""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = getattr(sys, "_MEIPASS", None)
+        if base_path is None:
+            base_path = Path(__file__).parent
+        else:
+            base_path = Path(base_path)
+    except Exception:
+        base_path = Path(__file__).parent
+    return str(base_path / relative_path)
+
 # LoadingOverlay and stylesheet generation live in `design.py`.
 
 class FileSearchThread(QThread):
@@ -146,9 +160,11 @@ class FileFinderApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("File Finder")
-        # Set custom app icon (expects AmeJump icon file in the working directory)
+        # Set custom window icon, resolving correctly in both dev and bundled EXE
         try:
-            self.setWindowIcon(QIcon("AmeJump.ico"))
+            icon = QIcon(resource_path("AmeJump.ico"))
+            if not icon.isNull():
+                self.setWindowIcon(icon)
         except Exception:
             pass
         self.setGeometry(100, 100, 820, 560)
@@ -458,6 +474,14 @@ class FileFinderApp(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    # Also set application icon so taskbar/alt-tab use AmeJump icon
+    try:
+        app_icon = QIcon(resource_path("AmeJump.ico"))
+        if not app_icon.isNull():
+            app.setWindowIcon(app_icon)
+    except Exception:
+        pass
+
     window = FileFinderApp()
     window.show()
     sys.exit(app.exec())

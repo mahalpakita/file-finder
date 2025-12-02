@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
     QLineEdit, QPushButton, QListWidget, QListWidgetItem, QLabel,
     QFileDialog, QCheckBox, QMessageBox, QComboBox, QSizePolicy
 )
-from PySide6.QtGui import QFont, QColor, QPainter
+from PySide6.QtGui import QFont, QColor, QPainter, QIcon
 from PySide6.QtCore import QTimer, QRect
 from design import generate_stylesheet
 
@@ -146,6 +146,11 @@ class FileFinderApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("File Finder")
+        # Set custom app icon (expects AmeJump icon file in the working directory)
+        try:
+            self.setWindowIcon(QIcon("AmeJump.ico"))
+        except Exception:
+            pass
         self.setGeometry(100, 100, 820, 560)
         self.search_thread = None
         self._result_count = 0
@@ -178,6 +183,8 @@ class FileFinderApp(QMainWindow):
         search_layout.addWidget(QLabel("File name:"))
         self.search_input = QLineEdit()
         self.search_input.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        # Pressing Enter in the search box starts a search
+        self.search_input.returnPressed.connect(self.start_search)
         search_layout.addWidget(self.search_input)
         self.search_button = QPushButton("Search")
         self.search_button.clicked.connect(self.start_search)
@@ -227,7 +234,7 @@ class FileFinderApp(QMainWindow):
 
         # Results list
         self.results_label = QLabel("Results:")
-        self.results_label.setStyleSheet("font-weight: bold; color: #333333;")
+        self.results_label.setStyleSheet("font-weight: bold; color: #ffffff;")
         layout.addWidget(self.results_label)
         self.results_list = QListWidget()
         self.results_list.setAlternatingRowColors(True)
@@ -371,7 +378,9 @@ class FileFinderApp(QMainWindow):
                         for m in matches:
                             s, e = m.start(), m.end()
                             parts.append(html.escape(orig[last:s]))
-                            parts.append(f"<span class=\"match\">{html.escape(orig[s:e])}</span>")
+                            # Inline style so highlights remain visible regardless of theme
+                            highlighted = f"<span style=\"background-color:#ffeb3b;color:#000;\">{html.escape(orig[s:e])}</span>"
+                            parts.append(highlighted)
                             last = e
                         parts.append(html.escape(orig[last:]))
                         html_text = "".join(parts)
@@ -384,6 +393,8 @@ class FileFinderApp(QMainWindow):
             label = QLabel()
             label.setTextFormat(Qt.RichText)
             label.setText(html_text)
+            label.setTextInteractionFlags(Qt.TextSelectableByMouse | Qt.TextSelectableByKeyboard)
+            label.setFocusPolicy(Qt.ClickFocus)
             label.setToolTip(filepath)
             label.setWordWrap(False)
             self.results_list.addItem(item)

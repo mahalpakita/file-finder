@@ -1,28 +1,26 @@
-## File Finder (AmeJump Edition)
+## File Finder 
 
 A fast, multi-threaded file search desktop app built with **Python + PySide6**.  
-You can search by filename (with optional extension filters), highlight matches in the results, and package it as a standalone Windows `.exe` with a custom AmeJump icon.
+You can search by file  (with optional extension filters), highlight matches in the results, and package it as a standalone Windows .exe.
 
 ---
 
 ### Features
 
-- **Instant filename search**
-  - Type a filename (or part of it) and press **Enter** or click **Search**.
+- **Instant file  search**
+  - Type a file  (or part of it) and press **Enter** or click **Search**.
   - Optionally search the **entire PC** or a specific folder.
 - **Case sensitivity toggle**
   - Switch between case-insensitive and case-sensitive matching.
 - **Extension filters / presets**
   - Quick presets: **All**, **Images**, **Documents**, **Code**.
-  - Or manually specify extensions (e.g. `py,txt,pdf`).
+  - Or manually specify extensions 
 - **Highlighted matches**
-  - The matching part of each filename is highlighted in yellow.
-- **Selectable / copyable results**
+  - The matching part of each file  is highlighted in yellow.
+- **Selectable/copyable results**
   - Result lines are selectable text, so you can easily copy full paths.
 - **Modern dark UI**
   - Custom-styled dark theme with accent colors.
-- **Packaged EXE**
-  - Can be built into a single-file `.exe` with a custom `AmeJump.ico` icon.
 
 ---
 
@@ -52,8 +50,8 @@ pip install PySide6
 
 - `main.py` – main application window and search logic (threads, UI wiring).
 - `design.py` – styling and loading overlay implementation.
-- `AmeJump.ico` – app icon (place this in the same folder as `main.py`).
-- `amelia-watson.gif` *(optional)* – animated GIF used by the loading overlay if present.
+- ` Jump.ico` – app icon (place this in the s  folder as `main.py`).
+- ` lia-watson.gif` *(optional)* – animated GIF used by the loading overlay if present.
 
 ---
 
@@ -80,19 +78,19 @@ First, install **PyInstaller**:
 pip install pyinstaller
 ```
 
-Make sure `AmeJump.ico` is in the same folder as `main.py`, then from that folder run:
+Make sure ` Jump.ico` is in the s  folder as `main.py`, then from that folder run:
 
 ```bash
-pyinstaller --noconsole --onefile --name "FileFinder" --icon "AmeJump.ico" ^
-  --add-data "AmeJump.ico;." main.py
+pyinstaller --noconsole --onefile --n  "FileFinder" --icon " Jump.ico" ^
+  --add-data " Jump.ico;." main.py
 ```
 
 Notes:
 
 - `--noconsole` hides the console window.
 - `--onefile` creates a single `FileFinder.exe`.
-- `--icon "AmeJump.ico"` sets the **file icon** in Explorer.
-- `--add-data "AmeJump.ico;."` bundles the icon so it can be used at runtime.
+- `--icon " Jump.ico"` sets the **file icon** in Explorer.
+- `--add-data " Jump.ico;."` bundles the icon so it can be used at runtime.
 
 After the build completes, the EXE will be in:
 
@@ -102,18 +100,18 @@ dist\FileFinder.exe
 
 Double-click `FileFinder.exe` to run the app like a normal Windows program.
 
-If you also use an animated GIF (e.g. `amelia-watson.gif`) for the loading overlay, add it as data too:
+If you also use an animated GIF (e.g. ` lia-watson.gif`) for the loading overlay, add it as data too:
 
 ```bash
-pyinstaller --noconsole --onefile --name "FileFinder" --icon "AmeJump.ico" ^
-  --add-data "AmeJump.ico;." --add-data "amelia-watson.gif;." main.py
+pyinstaller --noconsole --onefile --n  "FileFinder" --icon " Jump.ico" ^
+  --add-data " Jump.ico;." --add-data " lia-watson.gif;." main.py
 ```
 
 ---
 
 ### Usage Tips
 
-- **Enter to search**: Press **Enter** in the filename box to start searching.
+- **Enter to search**: Press **Enter** in the filen  box to start searching.
 - **Whole PC vs folder**:
   - Check **“Search entire PC”** to scan all available drives.
   - Or uncheck it and choose a specific directory.
@@ -124,20 +122,6 @@ pyinstaller --noconsole --onefile --name "FileFinder" --icon "AmeJump.ico" ^
 
 ---
 
-### Troubleshooting
-
-- **Imports not resolved in IDE**  
-  Ensure your editor is using the same Python interpreter where you ran:
-
-  ```bash
-  pip install PySide6
-  ```
-
-- **Icon not visible in EXE**  
-  - Confirm `AmeJump.ico` exists next to `main.py`.
-  - Rebuild the EXE with `--icon` **and** `--add-data "AmeJump.ico;."`.
-
----
 
 ### License
 

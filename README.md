@@ -33,7 +33,4 @@ You can search by file  (with optional extension filters), highlight matches in 
   - Click into a result line, drag to select text, and press **Ctrl+C**.
 
 
-This project is provided as-is for personal / educational use.  
-Replace this section with your preferred license if you intend to distribute it.
-
-
+This project is provided as-is for personal 

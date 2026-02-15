@@ -137,7 +137,7 @@ def generate_stylesheet(accent1: str, accent2: str):
         color: {label_color};
     }}
     QLineEdit {{
-        border: 1px solid {border_color};
+        border: 1px solid black;
         border-radius: 6px;
         padding: 6px;
         background: {input_bg};
